@@ -9,11 +9,11 @@ export const siteConfig = {
 
   url:
     process.env.NEXT_PUBLIC_SITE_URL ??
-    "http://localhost:3000",
+    "https://spiritual-maturity.vercel.app",
 
   apiUrl:
     process.env.NEXT_PUBLIC_API_URL ??
-    "https://api.example.com",
+    "https://booklaunchapi.ezirimkingdom.com.ng",
 
   author: {
     name: "Jeremiah I. Austin",

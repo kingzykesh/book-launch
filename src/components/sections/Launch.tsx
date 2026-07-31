@@ -25,8 +25,6 @@ import {
   Package,
   Phone,
   ShieldCheck,
-  Sparkles,
-  Flame,
   UserRound,
   FlameIcon,
 } from "lucide-react";
@@ -438,6 +436,14 @@ function WaitlistPanel() {
   const [isSuccessful, setIsSuccessful] =
     useState(false);
 
+  const [successTitle, setSuccessTitle] =
+    useState("You are on the list.");
+
+  const [successMessage, setSuccessMessage] =
+    useState(
+      "Thank you for joining. You will receive the official launch notification and purchase details when the book becomes available.",
+    );
+
   const handleChange = (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
@@ -526,13 +532,53 @@ function WaitlistPanel() {
         | {
             success?: boolean;
             message?: string;
+            already_joined?: boolean;
+            email_sent?: boolean;
+            errors?: Partial<
+              Record<
+                "full_name" | "email" | "phone",
+                string
+              >
+            >;
           }
         | null;
 
-      if (!response.ok || result?.success === false) {
+      if (!response.ok || result?.success !== true) {
+        if (result?.errors) {
+          setErrors({
+            fullName: result.errors.full_name,
+            email: result.errors.email,
+            phone: result.errors.phone,
+            submit: result.message,
+          });
+
+          return;
+        }
+
         throw new Error(
           result?.message ??
             "We could not add you to the waitlist.",
+        );
+      }
+
+      if (result.already_joined) {
+        setSuccessTitle("You are already on the list.");
+
+        setSuccessMessage(
+          "This email address has already been registered. You will receive the official launch announcement and purchase details when the book becomes available.",
+        );
+      } else if (result.email_sent === false) {
+        setSuccessTitle("Your place is reserved.");
+
+        setSuccessMessage(
+          "You are officially on the launch list. Your confirmation email may take a little longer to arrive, but your details have been saved successfully.",
+        );
+      } else {
+        setSuccessTitle("You are on the list.");
+
+        setSuccessMessage(
+          result.message ??
+            "You are officially on the launch list. Please check your inbox for your confirmation email.",
         );
       }
 
@@ -601,18 +647,22 @@ function WaitlistPanel() {
             </span>
 
             <h3 className="mt-7 font-display text-4xl font-medium text-white sm:text-5xl">
-              You are on the list.
+              {successTitle}
             </h3>
 
             <p className="mt-5 max-w-md text-base leading-8 text-white/55">
-              Thank you for joining. You will receive the
-              official launch notification and purchase
-              details when the book becomes available.
+              {successMessage}
             </p>
 
             <button
               type="button"
-              onClick={() => setIsSuccessful(false)}
+              onClick={() => {
+                setIsSuccessful(false);
+                setSuccessTitle("You are on the list.");
+                setSuccessMessage(
+                  "Thank you for joining. You will receive the official launch notification and purchase details when the book becomes available.",
+                );
+              }}
               className="mt-8 text-sm font-bold text-[#f2dcac] transition hover:text-white"
             >
               Add another person
