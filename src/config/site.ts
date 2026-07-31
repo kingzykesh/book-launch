@@ -35,10 +35,10 @@ export const siteConfig = {
   backgroundColor: "#FCF8F3",
 
   ogImage:
-    "/images/seo/spiritual-maturity-og.jpg",
+    "/images/seo/spiritual-maturity-og.png",
 
   twitterImage:
-    "/images/seo/spiritual-maturity-twitter.jpg",
+    "/images/seo/spiritual-maturity-twitter.png",
 
   author: {
     name: "Jeremiah I. Austin",

@@ -2,7 +2,6 @@
 
 import {
   useEffect,
-  useMemo,
   useState,
   type ChangeEvent,
   type FormEvent,
@@ -106,29 +105,42 @@ function calculateCountdown(
 export default function Launch() {
   const shouldReduceMotion = useReducedMotion();
 
-  const initialCountdown = useMemo(
-    () => calculateCountdown(bookConfig.launch.date),
-    [],
-  );
-
   const [countdown, setCountdown] =
-    useState<CountdownState>(initialCountdown);
+  useState<CountdownState>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    isComplete: false,
+  });
+
+const [hasMounted, setHasMounted] =
+  useState(false);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setCountdown(
-        calculateCountdown(bookConfig.launch.date),
-      );
-    }, 1000);
+  setHasMounted(true);
 
-    return () => {
-      window.clearInterval(timer);
-    };
-  }, []);
+  const updateCountdown = () => {
+    setCountdown(
+      calculateCountdown(bookConfig.launch.date),
+    );
+  };
+
+  updateCountdown();
+
+  const timer = window.setInterval(
+    updateCountdown,
+    1000,
+  );
+
+  return () => {
+    window.clearInterval(timer);
+  };
+}, []);
 
   const isLaunchLive =
-    bookConfig.launch.status === "live" ||
-    countdown.isComplete;
+  bookConfig.launch.status === "live" ||
+  (hasMounted && countdown.isComplete);
 
   return (
     <section
@@ -185,10 +197,11 @@ export default function Launch() {
         </motion.div>
 
         <div className="mt-16 lg:mt-20">
-          <LaunchCountdown
-            countdown={countdown}
-            isLaunchLive={isLaunchLive}
-          />
+         <LaunchCountdown
+  countdown={countdown}
+  isLaunchLive={isLaunchLive}
+  hasMounted={hasMounted}
+/>
         </div>
 
         <div className="mt-16 grid items-start gap-10 lg:mt-20 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
