@@ -6,6 +6,9 @@ import Hero from "@/components/sections/Hero";
 import BookStory from "@/components/sections/BookStory";
 import Benefits from "@/components/sections/Benefits";
 import Author from "@/components/sections/Author";
+import Launch from "@/components/sections/Launch";
+import FinalCTA from "@/components/sections/FinalCTA";
+import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   const bookSchema = {
@@ -50,7 +53,10 @@ export default function Home() {
         <BookStory />
         <Benefits />
          <Author />
+          <Launch />
+          <FinalCTA />
       </main>
+      <Footer />
     </>
   );
 }

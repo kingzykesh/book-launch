@@ -1,24 +1,31 @@
 export const bookConfig = {
-  title: "The Book Title",
-  shortTitle: "The Book Title",
+  title: "Spiritual Maturity",
+  subtitle: "Foundations for Spiritual Growth",
+  shortTitle: "Spiritual Maturity",
 
-  eyebrow: "Foundations for Spiritual Growth",
+  eyebrow: "A TRANSFORMATIVE NEW BOOK",
 
   headline: {
-    firstLine: "Build the",
-    emphasizedLine: "Foundations",
+    firstLine: "The Courage to",
+    emphasizedLine: "Become More.",
   },
 
   description:
-    "A practical, biblically grounded guide to developing deeper faith, spiritual discipline, and a mature Christian life that produces lasting transformation.",
+    "A practical and spiritually grounded guide created to help believers strengthen their foundations, deepen their walk with God, and grow into lasting spiritual maturity.",
 
   author: "Jeremiah I. Austin",
-
   forewordBy: "Dr Samuel I. Okoro",
 
-  launchDate: "2026-08-02T12:00:00+01:00",
+  launch: {
+    status: "prelaunch" as
+      | "prelaunch"
+      | "live"
+      | "closed",
 
-  launchDateLabel: "Launching August 2, 2026",
+    date: "2026-08-02T12:00:00+01:00",
+    displayDate: "August 2, 2026",
+    timezone: "West Africa Time",
+  },
 
   cover: {
     front: "/images/book/front.png",
@@ -27,9 +34,23 @@ export const bookConfig = {
     pages: "/images/book/pages.png",
   },
 
-  pricing: {
-    softCopy: 0,
-    hardCopy: 0,
-    currency: "NGN",
+  formats: {
+    digital: {
+      name: "Digital Edition",
+      description:
+        "Read instantly on your phone, tablet, or computer.",
+      price: 0,
+      available: true,
+    },
+
+    hardCopy: {
+      name: "Hard Copy",
+      description:
+        "Own the beautifully printed physical edition.",
+      price: 0,
+      available: true,
+    },
   },
+
+  currency: "NGN",
 } as const;

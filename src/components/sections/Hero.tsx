@@ -153,12 +153,10 @@ export default function Hero() {
                 className="text-[#d7b56d]"
               />
 
-              {bookConfig.launchDateLabel}
+             {bookConfig.launch.displayDate}
             </div>
 
-            <Countdown
-              targetDate={bookConfig.launchDate}
-            />
+           <Countdown targetDate={bookConfig.launch.date} />
           </motion.div>
         </motion.div>
 

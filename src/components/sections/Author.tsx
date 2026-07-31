@@ -252,7 +252,7 @@ function AuthorPortrait() {
       <div className="relative overflow-hidden rounded-[2.5rem] border border-[#590a4e]/10 bg-[#eee2e9] p-3 shadow-[0_35px_100px_rgba(89,10,78,0.16)]">
         <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-[#e7d7e1]">
           <img
-            src="/images/author/jeremiah-austin.webp"
+            src="/images/author/jeremiah-austin.jpeg"
             alt="Jeremiah I. Austin, author of Spiritual Maturity"
             draggable={false}
             className="h-full w-full object-cover object-top"
