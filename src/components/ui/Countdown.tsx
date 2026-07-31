@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface CountdownProps {
   targetDate: string;
+  className?: string;
 }
 
-interface TimeRemaining {
+interface TimeLeft {
   days: number;
   hours: number;
   minutes: number;
@@ -14,13 +15,24 @@ interface TimeRemaining {
   isComplete: boolean;
 }
 
-function calculateTimeRemaining(
-  targetDate: string,
-): TimeRemaining {
-  const difference =
-    new Date(targetDate).getTime() - Date.now();
+const initialTimeLeft: TimeLeft = {
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  isComplete: false,
+};
 
-  if (difference <= 0) {
+function calculateTimeLeft(
+  targetDate: string,
+): TimeLeft {
+  const targetTime = new Date(targetDate).getTime();
+  const difference = targetTime - Date.now();
+
+  if (
+    Number.isNaN(targetTime) ||
+    difference <= 0
+  ) {
     return {
       days: 0,
       hours: 0,
@@ -31,94 +43,101 @@ function calculateTimeRemaining(
   }
 
   return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+    days: Math.floor(
+      difference / (1000 * 60 * 60 * 24),
+    ),
     hours: Math.floor(
       (difference / (1000 * 60 * 60)) % 24,
     ),
     minutes: Math.floor(
       (difference / (1000 * 60)) % 60,
     ),
-    seconds: Math.floor((difference / 1000) % 60),
+    seconds: Math.floor(
+      (difference / 1000) % 60,
+    ),
     isComplete: false,
   };
 }
 
 export default function Countdown({
   targetDate,
+  className = "",
 }: CountdownProps) {
-  const initialState = useMemo(
-    () => calculateTimeRemaining(targetDate),
-    [targetDate],
-  );
+  const [timeLeft, setTimeLeft] =
+    useState<TimeLeft>(initialTimeLeft);
 
-  const [timeRemaining, setTimeRemaining] =
-    useState<TimeRemaining>(initialState);
+  const [hasMounted, setHasMounted] =
+    useState(false);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setTimeRemaining(
-        calculateTimeRemaining(targetDate),
-      );
-    }, 1000);
+    setHasMounted(true);
+
+    const updateCountdown = () => {
+      setTimeLeft(calculateTimeLeft(targetDate));
+    };
+
+    updateCountdown();
+
+    const timer = window.setInterval(
+      updateCountdown,
+      1000,
+    );
 
     return () => {
       window.clearInterval(timer);
     };
   }, [targetDate]);
 
-  if (timeRemaining.isComplete) {
+  const countdownItems = [
+    {
+      label: "Days",
+      value: timeLeft.days,
+    },
+    {
+      label: "Hours",
+      value: timeLeft.hours,
+    },
+    {
+      label: "Minutes",
+      value: timeLeft.minutes,
+    },
+    {
+      label: "Seconds",
+      value: timeLeft.seconds,
+    },
+  ];
+
+  if (hasMounted && timeLeft.isComplete) {
     return (
-      <div className="inline-flex items-center gap-3 rounded-full border border-[#d7b56d]/30 bg-[#d7b56d]/10 px-4 py-2 text-sm font-semibold text-[#f2dcac]">
-        <span className="size-2 animate-pulse rounded-full bg-[#d7b56d]" />
-        The book is now available
+      <div
+        className={`rounded-2xl border border-[#d7b56d]/25 bg-[#d7b56d]/10 px-5 py-4 text-center backdrop-blur-xl ${className}`}
+      >
+        <p className="font-display text-xl font-semibold text-[#f2dcac] sm:text-2xl">
+          The book is officially available.
+        </p>
       </div>
     );
   }
 
-  const countdownItems = [
-    {
-      label: "Days",
-      value: timeRemaining.days,
-    },
-    {
-      label: "Hours",
-      value: timeRemaining.hours,
-    },
-    {
-      label: "Minutes",
-      value: timeRemaining.minutes,
-    },
-    {
-      label: "Seconds",
-      value: timeRemaining.seconds,
-    },
-  ];
-
   return (
     <div
-      className="flex flex-wrap items-center gap-2 sm:gap-3"
-      aria-label="Countdown to book launch"
+      className={`grid grid-cols-4 gap-2 sm:gap-3 ${className}`}
+      aria-label="Countdown to the book launch"
     >
-      {countdownItems.map((item, index) => (
+      {countdownItems.map((item) => (
         <div
           key={item.label}
-          className="flex items-center gap-2 sm:gap-3"
+          className="rounded-xl border border-white/10 bg-white/[0.045] px-2 py-3 text-center backdrop-blur-md sm:rounded-2xl sm:px-3 sm:py-4"
         >
-          <div className="min-w-[3.5rem] rounded-2xl border border-white/10 bg-white/[0.065] px-2 py-2.5 text-center backdrop-blur-md sm:min-w-[4.25rem] sm:px-3 sm:py-3">
-            <span className="block font-display text-2xl font-semibold leading-none text-white sm:text-3xl">
-              {String(item.value).padStart(2, "0")}
-            </span>
+          <span className="block font-display text-2xl font-semibold leading-none text-white sm:text-3xl">
+            {hasMounted
+              ? String(item.value).padStart(2, "0")
+              : "--"}
+          </span>
 
-            <span className="mt-1 block text-[0.52rem] font-bold uppercase tracking-[0.18em] text-white/45 sm:text-[0.58rem]">
-              {item.label}
-            </span>
-          </div>
-
-          {index < countdownItems.length - 1 && (
-            <span className="hidden font-display text-xl text-[#d7b56d]/60 sm:block">
-              :
-            </span>
-          )}
+          <span className="mt-2 block text-[0.48rem] font-bold uppercase tracking-[0.14em] text-white/35 sm:text-[0.55rem] sm:tracking-[0.18em]">
+            {item.label}
+          </span>
         </div>
       ))}
     </div>

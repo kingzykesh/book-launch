@@ -106,41 +106,41 @@ export default function Launch() {
   const shouldReduceMotion = useReducedMotion();
 
   const [countdown, setCountdown] =
-  useState<CountdownState>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    isComplete: false,
-  });
+    useState<CountdownState>({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      isComplete: false,
+    });
 
-const [hasMounted, setHasMounted] =
-  useState(false);
+  const [hasMounted, setHasMounted] =
+    useState(false);
 
   useEffect(() => {
-  setHasMounted(true);
+    setHasMounted(true);
 
-  const updateCountdown = () => {
-    setCountdown(
-      calculateCountdown(bookConfig.launch.date),
+    const updateCountdown = () => {
+      setCountdown(
+        calculateCountdown(bookConfig.launch.date),
+      );
+    };
+
+    updateCountdown();
+
+    const timer = window.setInterval(
+      updateCountdown,
+      1000,
     );
-  };
 
-  updateCountdown();
-
-  const timer = window.setInterval(
-    updateCountdown,
-    1000,
-  );
-
-  return () => {
-    window.clearInterval(timer);
-  };
-}, []);
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
 
   const isLaunchLive =
-  bookConfig.launch.status === "live" ||
-  (hasMounted && countdown.isComplete);
+    bookConfig.launch.status === "live" ||
+    (hasMounted && countdown.isComplete);
 
   return (
     <section
@@ -197,11 +197,11 @@ const [hasMounted, setHasMounted] =
         </motion.div>
 
         <div className="mt-16 lg:mt-20">
-         <LaunchCountdown
-  countdown={countdown}
-  isLaunchLive={isLaunchLive}
-  hasMounted={hasMounted}
-/>
+          <LaunchCountdown
+            countdown={countdown}
+            isLaunchLive={isLaunchLive}
+            hasMounted={hasMounted}
+          />
         </div>
 
         <div className="mt-16 grid items-start gap-10 lg:mt-20 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
@@ -264,11 +264,13 @@ function LaunchBackground() {
 interface LaunchCountdownProps {
   countdown: CountdownState;
   isLaunchLive: boolean;
+  hasMounted: boolean;
 }
 
 function LaunchCountdown({
   countdown,
   isLaunchLive,
+  hasMounted,
 }: LaunchCountdownProps) {
   if (isLaunchLive) {
     return (
@@ -343,7 +345,9 @@ function LaunchCountdown({
           />
 
           <span className="relative block font-display text-6xl font-medium leading-none text-[#f2dcac] sm:text-7xl lg:text-8xl">
-            {String(item.value).padStart(2, "0")}
+            {hasMounted
+              ? String(item.value).padStart(2, "0")
+              : "--"}
           </span>
 
           <span className="relative mt-4 block text-[0.6rem] font-bold uppercase tracking-[0.24em] text-white/40">
