@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1d171c;
+
+  --primary: #590a4e;
+  --primary-dark: #260321;
+  --primary-deep: #160112;
+  --primary-light: #8a217b;
+
+  --accent: #d7b56d;
+  --accent-light: #f2dcac;
+
+  --ivory: #fcf8f3;
+  --lavender-mist: #f5edf4;
+  --mauve: #c98cbe;
+
+  --muted: #746a72;
+  --border: rgba(89, 10, 78, 0.12);
+
+  --font-body: var(--font-manrope);
+  --font-display: var(--font-cormorant);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--primary-deep);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--primary-deep);
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+.container-shell {
+  width: min(100% - 2rem, 90rem);
+  margin-inline: auto;
+}
+
+.hero-background {
+  background:
+    radial-gradient(
+      circle at 78% 40%,
+      rgba(201, 140, 190, 0.22),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 20% 12%,
+      rgba(215, 181, 109, 0.12),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 48% 105%,
+      rgba(138, 33, 123, 0.3),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #160112 0%,
+      #260321 48%,
+      #590a4e 100%
+    );
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 72px 72px;
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.72),
+    transparent 92%
+  );
+}
+
+.hero-noise {
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='.9'/%3E%3C/svg%3E");
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(
+    115deg,
+    #f7e8c2 0%,
+    #d7b56d 42%,
+    #fff1cd 70%,
+    #b58d41 100%
+  );
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.glass-border {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.book-glow {
+  background: radial-gradient(
+    circle,
+    rgba(215, 181, 109, 0.2),
+    rgba(201, 140, 190, 0.13) 38%,
+    transparent 70%
+  );
+
+  filter: blur(8px);
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 5s ease-in-out infinite;
+}
+
+@keyframes scroll-indicator {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.scroll-indicator-dot {
+  animation: scroll-indicator 1.9s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .container-shell {
+    width: min(100% - 1.25rem, 90rem);
+  }
+
+  .hero-grid {
+    background-size: 48px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
