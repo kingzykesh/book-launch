@@ -9,6 +9,7 @@ import {
   BookOpen,
   Crown,
   HeartHandshake,
+  Pen,
   Quote,
   Sparkles,
 } from "lucide-react";
@@ -273,7 +274,7 @@ function AuthorPortrait() {
               </div>
 
               <span className="grid size-12 shrink-0 place-items-center rounded-full border border-white/20 bg-white/10 text-[#f2dcac] backdrop-blur-md">
-                <Sparkles size={20} />
+                <Pen size={20} />
               </span>
             </div>
           </div>
