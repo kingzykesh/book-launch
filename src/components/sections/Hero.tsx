@@ -6,6 +6,7 @@ import {
   ArrowRight,
   BookOpenText,
   CalendarDays,
+  FlameIcon,
   Sparkles,
 } from "lucide-react";
 
@@ -59,7 +60,7 @@ export default function Hero() {
             }}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#d7b56d]/25 bg-[#d7b56d]/10 px-4 py-2 text-[0.65rem] font-bold uppercase tracking-[0.23em] text-[#f2dcac] backdrop-blur-lg"
           >
-            <Sparkles size={14} />
+            <FlameIcon size={14} />
             {bookConfig.eyebrow}
           </motion.div>
 
