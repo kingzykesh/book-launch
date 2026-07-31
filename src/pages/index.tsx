@@ -1,61 +1,45 @@
-import { bookConfig } from "@/config/book";
-import { siteConfig } from "@/config/site";
-
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
+import SEO from "@/components/seo/SEO";
+import StructuredData from "@/components/seo/StructuredData";
+
 import Hero from "@/components/sections/Hero";
 import BookStory from "@/components/sections/BookStory";
 import Benefits from "@/components/sections/Benefits";
 import Author from "@/components/sections/Author";
+import Recommendation from "@/components/sections/Recommendation";
+import Foreword from "@/components/sections/Foreword";
 import Launch from "@/components/sections/Launch";
 import FinalCTA from "@/components/sections/FinalCTA";
-import Footer from "@/components/layout/Footer";
 
 export default function Home() {
-  const bookSchema = {
-    "@context": "https://schema.org",
-    "@type": "Book",
-
-    name: bookConfig.title,
-
-    author: {
-      "@type": "Person",
-      name: bookConfig.author,
-    },
-
-    image: `${siteConfig.url}${bookConfig.cover.front}`,
-
-    description: bookConfig.description,
-
-    inLanguage: "en",
-
-    datePublished: "2026-08-02",
-
-    bookFormat: [
-      "https://schema.org/EBook",
-      "https://schema.org/Hardcover",
-    ],
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(bookSchema),
-        }}
+      <SEO
+        title="Spiritual Maturity — Foundations for Spiritual Growth"
+        description="Discover Spiritual Maturity by Jeremiah I. Austin—a practical, biblically grounded guide for building strong spiritual foundations, deepening your walk with God, and growing into lasting Christian maturity."
+        canonicalPath="/"
+        image="/images/seo/spiritual-maturity-og.jpg"
+        imageAlt="Spiritual Maturity: Foundations for Spiritual Growth by Jeremiah I. Austin"
+        type="website"
       />
+
+      <StructuredData />
 
       <Navbar />
 
       <main>
         <Hero />
-
         <BookStory />
         <Benefits />
-         <Author />
-          <Launch />
-          <FinalCTA />
+        <Author />
+        <Recommendation />
+        <Foreword />
+        <Launch />
+        <FinalCTA />
       </main>
+
       <Footer />
     </>
   );

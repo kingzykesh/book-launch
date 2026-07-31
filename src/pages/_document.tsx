@@ -7,16 +7,44 @@ import {
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en-NG">
       <Head>
-        <meta
-          name="theme-color"
-          content="#260321"
+        <meta charSet="utf-8" />
+
+        <link
+          rel="icon"
+          href="/favicon.ico"
+          sizes="any"
+        />
+
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+
+        <link
+          rel="manifest"
+          href="/site.webmanifest"
         />
 
         <meta
-          name="application-name"
-          content="Book Launch"
+          name="msapplication-TileColor"
+          content="#590A4E"
         />
 
         <meta
@@ -26,17 +54,12 @@ export default function Document() {
 
         <meta
           name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
+          content="default"
         />
 
-        <link
-          rel="icon"
-          href="/favicon.ico"
-        />
-
-        <link
-          rel="apple-touch-icon"
-          href="/apple-touch-icon.png"
+        <meta
+          name="apple-mobile-web-app-title"
+          content="Spiritual Maturity"
         />
       </Head>
 
